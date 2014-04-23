@@ -1,3 +1,4 @@
+name             "chef-sonar"
 maintainer       "Christian Trabold"
 maintainer_email "info@christian-trabold.de"
 license          "Apache 2.0"
