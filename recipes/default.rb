@@ -20,12 +20,22 @@
 include_recipe "ark"
 include_recipe "java"
 
-ark "sonar" do
-  prefix_home "/opt"
-  prefix_root "/opt"
-  version node['sonar']['version']
-  url "#{node['sonar']['mirror']}/sonarqube-#{node['sonar']['version']}.zip"
-  action :install
+if node['sonar']['version'] < 4 
+  ark "sonar" do
+    prefix_home "/opt"
+    prefix_root "/opt"
+    version node['sonar']['version']
+    url "#{node['sonar']['mirror']}/sonar-#{node['sonar']['version']}.zip"
+    action :install
+  end
+else
+  ark "sonar" do
+    prefix_home "/opt"
+    prefix_root "/opt"
+    version node['sonar']['version']
+    url "#{node['sonar']['mirror']}/sonarqube-#{node['sonar']['version']}.zip"
+    action :install
+  end
 end
 
 service "sonar" do
