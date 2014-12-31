@@ -20,7 +20,9 @@
 include_recipe "ark"
 include_recipe "java"
 
-if node['sonar']['version'] < 4 
+require 'chef/version_constraint'
+
+if Chef::VersionConstraint.new(">= 4.0").include?(node['sonar']['version'])
   ark "sonar" do
     prefix_home "/opt"
     prefix_root "/opt"
