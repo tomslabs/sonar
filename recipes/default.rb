@@ -61,14 +61,26 @@ template "sonar.properties" do
   notifies :create, 'ruby_block[block_sonar_until_operational]', :immediately
 end
 
-template "wrapper.conf" do
-  path "/opt/sonar/conf/wrapper.conf"
-  source "wrapper.conf.erb"
-  owner "root"
-  group "root"
-  mode 0644
-  notifies :restart, 'service[sonar]', :immediately
-  notifies :create, 'ruby_block[block_sonar_until_operational]', :immediately
+if Chef::VersionConstraint.new(">= 4.0").include?(node['sonar']['version'])
+  template "wrapper.conf" do
+    path "/opt/sonar/conf/wrapper.conf"
+    source "wrapper4.conf.erb"
+    owner "root"
+    group "root"
+    mode 0644
+    notifies :restart, 'service[sonar]', :immediately
+    notifies :create, 'ruby_block[block_sonar_until_operational]', :immediately
+  end
+else
+  template "wrapper.conf" do
+    path "/opt/sonar/conf/wrapper.conf"
+    source "wrapper.conf.erb"
+    owner "root"
+    group "root"
+    mode 0644
+    notifies :restart, 'service[sonar]', :immediately
+    notifies :create, 'ruby_block[block_sonar_until_operational]', :immediately
+  end
 end
 
 ruby_block 'block_sonar_until_operational' do
