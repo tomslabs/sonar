@@ -27,7 +27,7 @@ if Chef::VersionConstraint.new(">= 4.0").include?(node['sonar']['version'])
     prefix_home "/opt"
     prefix_root "/opt"
     version node['sonar']['version']
-    url "#{node['sonar']['mirror']}/sonarqbe-#{node['sonar']['version']}.zip"
+    url "#{node['sonar']['mirror']}/sonarqube-#{node['sonar']['version']}.zip"
     action :install
   end
 else
